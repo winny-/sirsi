@@ -28,7 +28,8 @@ def main(args):
         s = 's'
     else:
         s = ''
-    print('You have {} item{} checked out. You owe {} in fines.'.format(len(items), s, fines))
+    print('You have {} item{} checked out. You owe {} in fines.'
+          .format(len(items), s, fines))
     if len(items) < 1:
         return
     print('')

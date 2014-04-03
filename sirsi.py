@@ -8,7 +8,10 @@ import re
 
 
 __all__ = ['Item', 'Account']
-Item = namedtuple('Item', ['machine_readable', 'human_readable', 'due_date', 'times_renewed'])
+Item = namedtuple('Item', ['machine_readable',
+                           'human_readable',
+                           'due_date',
+                           'times_renewed'])
 
 
 class Account(object):
@@ -75,13 +78,14 @@ class Account(object):
             machine_readable_name = item.find('input')['name']
             human_readable_name = item.find('label').text.strip() \
                 .replace(u'\xa0\xa0\n\t\t \n          \n          ', ' -- ')
-            due_date, times_renewed = [i.text.strip() for i in item.find_all('strong', limit=2)]
+            due_date, times_renewed = [i.text.strip() for i in item
+                                       .find_all('strong', limit=2)]
             return_items.append(Item(
                 machine_readable_name,
                 human_readable_name,
                 parsedate(due_date),
                 int(times_renewed)
-                ))
+            ))
         return return_items
 
     def renew(self, items):
@@ -141,4 +145,6 @@ class Account(object):
         return BeautifulSoup(response.read())
 
     def __repr__(self):
-        return '<{} {} {}>'.format(self.__class__.__name__, self.catalog, self.userid)
+        return '<{} {} {}>'.format(self.__class__.__name__,
+                                   self.catalog,
+                                   self.userid)
