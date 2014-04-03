@@ -8,6 +8,7 @@ import sys
 
 
 def get_configuration(json_file=None):
+    """Get JSON configuration object from file."""
     if json_file is None:
         home = os.path.expanduser('~')
         json_file = os.path.join(home, '.sirsi.json')
