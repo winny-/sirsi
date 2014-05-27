@@ -80,11 +80,15 @@ class Account(object):
                 .replace(u'\xa0\xa0\n\t\t \n          \n          ', ' -- ')
             due_date, times_renewed = [i.text.strip() for i in item
                                        .find_all('strong', limit=2)]
+            try:
+                times_renewed = int(times_renewed)
+            except ValueError:  # Entry is an ILL, times_renewed == ''
+                times_renewed = 0
             return_items.append(Item(
                 machine_readable_name,
                 human_readable_name,
                 parsedate(due_date),
-                int(times_renewed)
+                times_renewed
             ))
         return return_items
 
