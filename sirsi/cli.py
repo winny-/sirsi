@@ -1,6 +1,6 @@
 from __future__ import print_function
 
-from sirsi import Account
+from .sirsi import Account
 from tabulate import tabulate
 import json
 import os.path
