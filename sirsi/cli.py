@@ -1,7 +1,5 @@
 from __future__ import print_function
-
 from .sirsi import Account
-from tabulate import tabulate
 import json
 import os.path
 import sys
@@ -35,10 +33,8 @@ def main(args):
     print('')
     print('Renewing all items... ', end='')
     print(a.renew_all())
-    items = [i[1:] for i in a.items()]
     print('')
-    table = tabulate(items, ['Book title', 'Due date', 'Times renewed'])
-    print(table)
+    [print(i) for i in items]
 
 
 if __name__ == '__main__':

@@ -15,6 +15,5 @@ setup(
         'beautifulsoup4==4.3.2',
         'mechanize==0.2.5',
         'python-dateutil==2.2',
-        'tabulate==0.7.2',
     ],
 )
