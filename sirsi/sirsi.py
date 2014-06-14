@@ -35,13 +35,14 @@ class Item(object):
         re.escape(HOLD_PREFIX),
     ))
 
-    def __init__(self, token, name=None, due_date=None, times_renewed=None, ill=None, renewable=None):
+    def __init__(self, token, name=None, due_date=None, times_renewed=None, ill=None, renewable=None, account=None):
         self.token = self.TOKEN_PREFIX.sub('', token)
         self.name = name
         self.due_date = due_date
         self.times_renewed = times_renewed
         self.ill = ill
         self.renewable = renewable
+        self.account = account
 
     @property
     def renew_token(self):
@@ -50,6 +51,9 @@ class Item(object):
     @property
     def hold_token(self):
         return '{}{}'.format(self.HOLD_PREFIX, self.token)
+
+    def renew(self):
+        return self.account.renew([self])
 
     def __str__(self):
         return '{}{}{}'.format(
@@ -144,7 +148,8 @@ class Account(object):
                 token,
                 name,
                 due_date,
-                times_renewed
+                times_renewed,
+                account=self,
             ))
         return return_items
 
