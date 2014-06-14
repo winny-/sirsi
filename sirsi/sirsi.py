@@ -36,7 +36,7 @@ class Item(object):
     ))
 
     def __init__(self, token, name=None, due_date=None, times_renewed=None, ill=None, renewable=None):
-        self.token = self.TOKEN_PREFIX.sub(token, '')
+        self.token = self.TOKEN_PREFIX.sub('', token)
         self.name = name
         self.due_date = due_date
         self.times_renewed = times_renewed
