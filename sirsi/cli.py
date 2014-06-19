@@ -22,12 +22,11 @@ def main(args):
     a = Account(catalog=args[0], userid=args[1], password=args[2])
     items = a.items()
     fines = a.fines()
-    if len(items) > 1:
-        s = 's'
-    else:
-        s = ''
-    print('You have {} item{} checked out. You owe {} in fines.'
-          .format(len(items), s, fines))
+    print('You have {} item{} checked out. You owe ${} in fines.'.format(
+        len(items),
+        's' * bool(len(items) != 1),
+        fines,
+    ))
     if len(items) < 1:
         return
     print('')

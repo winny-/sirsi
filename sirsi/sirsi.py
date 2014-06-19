@@ -140,16 +140,19 @@ class Account(object):
             due_date, times_renewed = [i.text.strip() for i in item
                                        .find_all('strong', limit=2)]
             due_date = dateutil.parser.parse(due_date)
+            ill = False
             try:
                 times_renewed = int(times_renewed)
             except ValueError:  # Entry is an ILL, times_renewed == ''
                 times_renewed = 0
+                ill = True
             return_items.append(Item(
                 token,
                 name,
                 due_date,
                 times_renewed,
                 account=self,
+                ill=ill,
             ))
         return return_items
 
@@ -178,6 +181,7 @@ class Account(object):
         li = soup.find('li', class_='summary').ul.li
         text = li.text.strip().replace('You owe', '')
         fines = Decimal(text.strip('$'))
+        fines = fines.quantize(Decimal('1.00'))  # Ensure cents are represented.
         return fines
 
     def _get_homepage(self):
