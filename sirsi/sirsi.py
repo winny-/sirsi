@@ -133,26 +133,16 @@ class Account(object):
         return_items = []
         for item in items:
             token = item.find('input')['name']
-            name = item.find('label').text.strip().replace(
-                u'\xa0\xa0\n\t\t \n          \n          ',
-                ' -- '
-            )
-            due_date, times_renewed = [i.text.strip() for i in item
-                                       .find_all('strong', limit=2)]
-            due_date = dateutil.parser.parse(due_date)
-            ill = False
-            try:
-                times_renewed = int(times_renewed)
-            except ValueError:  # Entry is an ILL, times_renewed == ''
-                times_renewed = 0
-                ill = True
+            name = item.find('label').text.strip().replace(u'\xa0\xa0\n\t\t \n          \n          ',
+                                                           ' -- ')
+            d = [i.text.strip() for i in item
+                 .find_all('strong', limit=1)]
+            due_date = dateutil.parser.parse(d[0])
             return_items.append(Item(
                 token,
                 name,
                 due_date,
-                times_renewed,
                 account=self,
-                ill=ill,
             ))
         return return_items
 
